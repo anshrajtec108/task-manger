@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Form</title>
+    <style>
+        /* Add your CSS styles to make the page beautiful */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        textarea {
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create Task</h1>
+    <form action="/addingTask" method="post">
+        
+        <label for="task">Task:</label>
+        <input type="text" id="task" name="task" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4"></textarea>
+
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+            <option value="important">Important</option>
+            <option value="notes">Notes</option>
+            <option value="trivial">Trivial</option>
+            <option value="link">Link</option>
+        </select>
+
+        <label for="position">Work Position:</label>
+        <select id="position" name="position">
+            <option value="In Progress">In Progress</option>
+            <option value="In Review">In Review</option>
+            <option value="Approved">Approved</option>
+        </select>
+
+        <label for="startDate">Start Date and Time:</label>
+        <input type="datetime-local" id="startDate" name="startDate" required>
+
+        <label for="endDate">End Date and Time:</label>
+        <input type="datetime-local" id="endDate" name="endDate">
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
