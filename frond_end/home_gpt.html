@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>task_gpt</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link href="home_gpt.css" rel="stylesheet">
         <style>
             .circle-button {
@@ -213,7 +214,38 @@
             <!-- Task items will be inserted here dynamically -->
             </div>
         </form>
+
+
+
+
+
+
+
+
+
+
+
+        <p class="d-inline-flex gap-1">
+            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+              Link with href
+            </a>
+            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              Button with data-bs-target
+            </button>
+          </p>
+
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <input type="text" placeholder="name">
+              Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+            </div>
+          </div>
     </div>
+
+
+
+
+
     <div class="right-bar">
         <div class="top-row">
             <div class="add-button">
@@ -221,7 +253,7 @@
             </div>
             <div class="profile">
                 <img src="path_to_your_profile_image.jpg" alt="Profile Image" class="profile-image">
-                <div class="username"id="usernamePlaceholder">ghjgh</div>
+                <div class="username"id="usernamePlaceholder">ghjgh</div> 🔥
             </div>
             <div class="count"></div>
         </div>
@@ -303,7 +335,9 @@
         </div>
     </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
+    let id;
        function openCreateTaskPage() {
           window.location.href = "/add";
         };
@@ -314,7 +348,8 @@
           console.log(data);
       
           const tasksWrapper = document.getElementById('tasksWrapper');
-          data.taskNames.forEach((taskObject, index) => {
+           data.taskNames.forEach((taskObject, index) => {
+            id=taskObject.id;
             const taskName = taskObject.task_name;
             const description = taskObject.description;
             const lable = taskObject.lable;
@@ -322,12 +357,13 @@
             const task_done = taskObject.task_done;
             const start_at = taskObject.start_at;
             const end_at = taskObject.end_at;
-            const user_name_f = taskObject.user_name;
+            const user_name_f = taskObject.user_name_f;
             const taskId = `item-${index + 1}`;
-      
+            console.log("1111",id)
             const taskDiv = document.createElement('div');
             taskDiv.classList.add('task');
             taskDiv.innerHTML = `
+            <form action="/task_modify" method="post">
               <input class="task-item" name="task" type="checkbox" id="${taskId}" ${task_done ? 'checked' : ''}>
               <label for="${taskId}">
                 <span class="label-text">${taskName}</span>
@@ -335,20 +371,52 @@
               <span class=" tag ${work_position}">${work_position}</span>
               <div class="card">
                 <p>Description: ${description}.</p>
-                <p class="">Label: ${lable}</p>
+                <p class=""name="label" value="${id}">Label: ${lable}</p>
                 <p class="tag ${work_position}">Work Position: ${work_position}</p>
-                <p class="tag ${start_at}">Work Position: ${start_at}</p>
-                <p class="tag ${end_at}">Work Position: ${end_at}</p>
+                <p class="tag ${start_at}">Start At: ${start_at}</p>
+                <p class="tag ${end_at}">End AT : ${end_at}</p>
               </div>
               <div class="more">
                 <div class="more-card">
-                  <button class="add-label">Tag</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    TAG
+                  </button>
+                  <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        <input type="text" placeholder="Enter Lable" name="enter_lable" id='enter_lable'>
+                    </div>
+                  </div>
                   <button class="remove-label">UnTag</button>
                   <button class="edit-task">Modify</button>
                   <button class="delete-task">Remove</button>
                 </div>
               </div>
+            </form>
             `;
+            let inputElement = document.getElementById('enter_lable'); // Get the input element by its ID
+            let input_var = inputElement.value; // Get the value of the input element
+
+            console.log("inputElement lable",input_var); // Log the value to the console or use it as needed
+
+            console.log("2222",id);
+            const val = id;
+            const url = `/task_modify?id=${val}`;
+
+          // Construct the URL with the query parameter
+
+
+            fetch(url, {
+            method: 'POST',
+            // ...
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result); // Handle the result from the backend
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
       
             // Add an event listener to the checkbox
             const checkbox = taskDiv.querySelector('.task-item');
@@ -391,10 +459,11 @@
                 });
     
                 // Add functionality to the buttons (you can customize these functions)
-                const addLabelBtn = taskDiv.querySelector('.add-label');
-                addLabelBtn.addEventListener('click', () => {
-                    // Implement the "Add Label" functionality here
-                });
+             //   document.getElementById("tagButton").addEventListener("click", function() {
+                    // Toggle the collapse element
+              //      var collapseExample = document.getElementById("collapseExample");
+              //      collapseExample.classList.toggle("show");
+              //    });
     
                 const removeLabelBtn = taskDiv.querySelector('.remove-label');
                 removeLabelBtn.addEventListener('click', () => {
@@ -414,24 +483,9 @@
             });
         });
        // In your frontend JavaScript
-const taskId_b = task_done // Replace with the actual task ID
-const taskDone_b = true; // Replace with the task status (true for checked, false for unchecked)
 
-fetch('/api/updateTaskStatus', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ taskId: taskId_b, task_done: taskDone_b }),
-})
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      console.log('Task status updated successfully');
-    } else {
-      console.error('Error updating task status');
-    }
-  });
+
+
 
     
     </script>

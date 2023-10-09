@@ -3,7 +3,7 @@ Creating a project using Node.js, Express.js, and MySQL can be a great way to le
 **Project Question: Build a Task Management System**
 
 **Project Description:**
-You are tasked with building a web-based task management system that allows users to create, update, and track tasks. Users should be able to sign up, log in, and manage their tasks. The application should be built using Node.js, Express.js, and MySQL for the backend and HTML/CSS/JavaScript for the frontend.
+You are tasked with building a web-based task management system that allows users to create, update, and track tasks. Users should be able to sign up, log in, and manage their tasks. The application should be built using Node.js, Express.js, and MySQL for the backend and HTML/CSS/JavaScript for the frontend.{to be contiue }
 
 **Key Features:**
 1. **User Authentication:**

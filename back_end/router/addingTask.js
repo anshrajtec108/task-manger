@@ -10,8 +10,9 @@ router.get('/add',(req,res)=>{
     const file_path = path.join(__dirname, '../../frond_end/create_task.html');
     res.sendFile(file_path)
 })
-const userData=read_json();
+
 router.post('/addingTask',(req,res)=>{
+    const userData=read_json();
        let user_id=userData.user_id
         let task= req.body.task ;
         let description=req.body.description;

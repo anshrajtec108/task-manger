@@ -30,7 +30,7 @@ function send_task(user_id,user_name) {
             reject(err); // Reject the promise if there's an error
           } else {
             results.forEach(row => {
-                row.user_name = user_name;
+                row.user_name_f = user_name;
               });
             resolve(results); // Resolve the promise with the results
           }

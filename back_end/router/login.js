@@ -9,7 +9,6 @@ router.get('/login', (req, res) => {
   const file_path = path.join(__dirname, '../../frond_end/login.html');
   res.sendFile(file_path);
 });
-
 router.post('/loginData', (req, res) => {
   let user_name_email = req.body.user_name_email;
   let password = req.body.password;
@@ -31,26 +30,28 @@ router.post('/loginData', (req, res) => {
         user_name: user_name
       };
 
- 
+      
+      async function updateUserInfo(id_tempFilePath, user_id, user_name) {
+        try {
+          const existingData = await fs.promises.readFile(id_tempFilePath, 'utf-8');
+          const userInfo = JSON.parse(existingData);
+          userInfo.user_id = user_id;
+          userInfo.user_name = user_name;
+      
+          const userInfoJSON = JSON.stringify(userInfo);
+      
+          await fs.promises.writeFile(id_tempFilePath, userInfoJSON, 'utf-8');   
 
-      try {
-        const existingData = fs.readFileSync(id_tempFilePath, 'utf-8');
-        const userInfo = JSON.parse(existingData);
-        userInfo.user_id = user_id; // Update the user_id with the new value
-        userInfo.user_name = user_name;
-        // Convert the JavaScript object to a JSON string
-        const userInfoJSON = JSON.stringify(userInfo);
-
-        // Write the updated JSON string back to the file (id_temp.json)
-        fs.writeFileSync(id_tempFilePath, userInfoJSON, 'utf-8')
-      } catch (error) {
-        console.error(error);
-        res.status(500).send('An error occurred while writing to the file.');
+        } catch (error) {
+          console.error(error);
+          throw new Error('An error occurred while writing to the file.');
+        }
       }
-    }
+      
+      updateUserInfo(id_tempFilePath, userInfo.user_id, userInfo.user_name);
 
     res.redirect('/');
-  });
+}});
 });
 
 module.exports = router;
